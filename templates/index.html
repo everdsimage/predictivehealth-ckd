@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI Predictive Health</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200&display=swap" rel="stylesheet">
+    <style>
+        .content {
+              max-width: 900px;
+              margin: auto;
+        }
+
+        .tab {
+              overflow: hidden;
+              border: 1px solid #ccc;
+              background-color: #f1f1f1;
+        }
+        .tab button {
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+        }
+
+        .tab button:hover {
+          background-color: #ddd;
+        }
+
+        .tab button.active {
+          background-color: #ccc;
+        }
+
+        .tabcontent {
+          display: none;
+          padding: 6px 12px;
+          border: 1px solid #ccc;
+          border-top: none;
+        }
+
+        .logo{
+                float: right;
+                width: 200px;
+                height: auto;
+                margin-right: auto;
+                display: block;
+          }
+
+          .in{
+                font-family: 'Prompt', sans-serif;
+                font-size: 110%;
+                line-height: 2.2;
+                font-weight: 900;
+          }
+
+          .in2{
+                display: inline-block;
+                border-radius: 8px;
+                width: 95%;
+                border: 2px solid;
+                padding: 20px;
+                margin: 0 auto;
+                font-family: 'Prompt', sans-serif;
+                font-size: 110%;
+                line-height: 2.2;
+                font-weight: 600;
+          }
+
+          .drop-down-menu{
+                width: 150px;
+          }
+
+          input {
+                width: 150px;
+          }
+
+          tr {
+            width: 290px;
+          }
+
+          .button {
+                background-color: #454545;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 2px;
+          }
+    </style>
+</head>
+<body>
+<div class="content">
+    <a href="/"><img class="logo" src="https://assets-global.website-files.com/60c5c9025063594e6cd453b9/60c5c902506359460bd453f5_ever-logo-638bcbe5031847a6ebbc31da705fee44.png"></a>
+<br><br><br><br><br>
+<h1>Find out your risk of Chronic Kidney Disease</h1>
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Early')">Early Stage</button>
+  <button class="tablinks" onclick="openTab(event, 'End')">End Stage</button>
+</div>
+
+<div id="Early" class="tabcontent">
+    <center><h2>Early stage risk of CKD</h2></center>
+<form action="{{ url_for('predict_earlystage')}}" method="get" enctype="multipart/form-data">
+<div class='in2'>
+<h3>Behavior Information</h3>
+<table style="width:100%">
+  <tr>
+    <td style="">Gender</td>
+    <td>Age</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><select class="drop-down-menu" name="patientSexName" id="patientSexName">
+                            <option value="0">Male</option>
+                            <option value="1">Female</option>
+                        </select></td>
+    <td><input type="number" name="patientAge" required="required"/></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>BPD</td>
+    <td>BPS</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><input type="number" name="vital_bpd" required="required" value="80"/></td>
+    <td><input type="number" name="vital_bps" required="required" value="120"/></td>
+    <td></td>
+  </tr>
+</table>
+</div>
+
+<br><br>
+
+<div class ='in2'>
+<h3>Related Diseases</h3>
+<table style="width:100%">
+  <tr>
+    <td>Diabetes</td>
+    <td>Hypertension</td>
+    <td>Anemia</td>
+  </tr>
+  <tr>
+      <td> <select class ="drop-down-menu" name="Diabetes" id="Diabetes">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select></td>
+    <td><select class ="drop-down-menu" name="Hypertension" id="Hypertension">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select></td>
+    <td><select class ="drop-down-menu" name="Anemia" id="Anemia">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select></td>
+  </tr>
+</table>
+</div>
+
+<br><br>
+
+<div class ='in2'>
+<h3>Complete Blood Count (CBC)</h3>
+<table style="width:100%">
+  <tr>
+    <td>Fasting Glucose</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><input type="number" name="Fasting_glucose" required="required" step="any" value="0"/></td>
+    <td></td>
+      <td></td>
+  </tr>
+  <tr>
+    <td>HGB</td>
+    <td>WBC</td>
+    <td>RBC</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="HGB" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="WBC" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="RBC" required="required" step="any" value="0"/></td>
+  </tr>
+  <tr>
+    <td>Creatinine</td>
+    <td>BUN</td>
+    <td>Potassium</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="Creatinine" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="BUN" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="Potassium" required="required" step="any" value="0"/></td>
+  </tr>
+  <tr>
+    <td>Sodium</td>
+    <td>Albumin</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><input type="number" name="Sodium" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="Albumin" required="required" step="any" value="0"/></td>
+    <td></td>
+  </tr>
+</table>
+</div>
+
+    <br><br>
+
+    <button class="button" type="submit">Predict</button>
+    <button class="button" type="reset">Clear</button>
+
+    <br>
+
+ <h2 style="height: 100px; width: 900px; text-align: center; color: #800000;">{{ prediction_text }}</h2>
+     <br><br>
+
+    <hr>
+
+</form>
+</div>
+
+
+<div id="End" class="tabcontent">
+  <center><h2>End stage risk of CKD</h2></center>
+<form action="{{ url_for('predict_endstage')}}" method="get" enctype="multipart/form-data">
+<div class='in2'>
+<h3>Behavior Information</h3>
+<table style="width:100%">
+  <tr>
+    <td style="">Gender</td>
+    <td>Age</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><select class="drop-down-menu" name="e_patientSexName" id="e_patientSexName">
+                            <option value="0">Male</option>
+                            <option value="1">Female</option>
+                        </select></td>
+    <td><input type="number" name="e_patientAge" required="required"/></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>BPD</td>
+    <td>BPS</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_vital_bpd" required="required" value="80"/></td>
+    <td><input type="number" name="e_vital_bps" required="required" value="120"/></td>
+    <td></td>
+  </tr>
+    <tr>
+    <td>Weight (kg.)</td>
+    <td>Height (cm.)</td>
+    <td>Smoking</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_vital_weight" required="required" step="any" /></td>
+    <td><input type="number" name="e_vital_height" required="required" step="any"/></td>
+    <td><select class ="drop-down-menu" name="e_smoking" id="e_smoking">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select></td>
+  </tr>
+</table>
+</div>
+
+<br><br>
+
+<div class ='in2'>
+<h3>Related Diseases</h3>
+<table style="width:100%">
+  <tr>
+    <td>Diabetes</td>
+    <td>Hypertension</td>
+    <td>Anemia</td>
+  </tr>
+  <tr>
+      <td> <select class ="drop-down-menu" name="e_Diabetes" id="e_Diabetes">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select></td>
+    <td><select class ="drop-down-menu" name="e_Hypertension" id="e_Hypertension">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select></td>
+    <td><select class ="drop-down-menu" name="e_Anemia" id="e_Anemia">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select></td>
+  </tr>
+</table>
+</div>
+
+<br><br>
+
+<div class ='in2'>
+<h3>Complete Blood Count (CBC)</h3>
+<table style="width:100%">
+  <tr>
+    <td>Fasting Glucose</td>
+    <td>LDL cholesterol</td>
+    <td>HDL cholesterol</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_Fasting_glucose" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_LDL_c" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_HDL_c" required="required" step="any" value="0"/></td>
+  </tr>
+  <tr>
+    <td>HGB</td>
+    <td>WBC</td>
+    <td>PLT</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_HGB" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_WBC" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_PLT" required="required" step="any" value="0"/></td>
+  </tr>
+    <tr>
+    <td>ALT</td>
+    <td>AST</td>
+    <td>ALP</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_ALT" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_AST" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_ALP" required="required" step="any" value="0"/></td>
+  </tr>
+  <tr>
+    <td>Creatinine</td>
+    <td>BUN</td>
+    <td>Potassium</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_Creatinine" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_BUN" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_Potassium" required="required" step="any" value="0"/></td>
+  </tr>
+  <tr>
+    <td>Sodium</td>
+    <td>Albumin</td>
+    <td>Calcium</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_Sodium" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_Albumin" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_Calcium" required="required" step="any" value="0"/></td>
+  </tr>
+  <tr>
+    <td>Triglyceride</td>
+    <td>Chloride</td>
+    <td>CO2</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_Triglyceride" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_Chlorine" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_Bicarbonate" required="required" step="any" value="0"/></td>
+  </tr>
+  <tr>
+    <td>Phosphorous</td>
+    <td>Total protein</td>
+    <td>Ca x P</td>
+  </tr>
+  <tr>
+    <td><input type="number" name="e_Phosphorous" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_Total_protein" required="required" step="any" value="0"/></td>
+    <td><input type="number" name="e_CaxP" required="required" step="any" value="0"/></td>
+  </tr>
+</table>
+</div>
+
+    <br><br>
+
+    <button class="button" type="submit">Predict</button>
+    <button class="button" type="reset">Clear</button>
+
+    <br>
+
+<h2 style="height: 100px; width: 900px; text-align: center; color: #800000;"><br>{{ e_prediction_text }}</h2>
+    <br><br>
+
+    <hr>
+
+</form>
+</div>
+
+<script>
+function openTab(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+     <br>
+     <h3>References:</h3>
+      Chronic Kidney Disease Prediction Using Machine Learning Methods<br>
+    <a href="https://ieeexplore.ieee.org/document/9185249" target="_blank">https://ieeexplore.ieee.org/document/9185249</a><br><br>
+    Machine learning to predict end stage kidney disease in chronic kidney disease<br>
+    <a href="https://www.nature.com/articles/s41598-022-12316-z" target="_blank">https://www.nature.com/articles/s41598-022-12316-z</a></p>
+
+</div>
+</body>
+</html>
